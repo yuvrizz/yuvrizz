@@ -39,6 +39,10 @@ Hi, I'm Yuvraj Singh, a Computer Science Engineering student at Delhi Technologi
 
 ---
 
+<div align="center">
+  <img src="https://github-readme-activity-graph-yuvriz.vercel.app/graph?username=yuvrizz&theme=react-dark&hide_border=true&area=true" alt="Yuvraj Singh's Contribution Graph" />
+</div>
+
 <!-- 
 
 ![Spotify recently played](https://spotify-recently-played.jeffreyca.workers.dev/svg?user=m933xiv3vosf8cbfr8twz3gwo&count=3&width=600&radius=18&unique=1)
