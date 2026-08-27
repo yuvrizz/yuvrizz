@@ -42,7 +42,7 @@ Hi, I'm Yuvraj Singh, a Computer Science Engineering student at Delhi Technologi
 ---
 
 
-
+<!-- 
 <div align="center">
 
 <img src="https://lanyard.cnrad.dev/api/1133861858642776094?hideSpotify=true" alt="Discord Presence" width="480" height="230">
@@ -52,6 +52,7 @@ Hi, I'm Yuvraj Singh, a Computer Science Engineering student at Delhi Technologi
 </div>
 
 ---
+-->
 
 <div align="center">
 
