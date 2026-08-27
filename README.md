@@ -19,6 +19,8 @@ Hi, I'm Yuvraj Singh, a Computer Science Engineering student at Delhi Technologi
 &nbsp;&nbsp;
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" width="45" height="45" alt="JavaScript">
 &nbsp;&nbsp;
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg" width="45" height="45" alt="TypeScript">
+&nbsp;&nbsp;
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" width="45" height="45" alt="React">
 &nbsp;&nbsp;
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" width="45" height="45" alt="Node.js">
@@ -39,12 +41,34 @@ Hi, I'm Yuvraj Singh, a Computer Science Engineering student at Delhi Technologi
 
 ---
 
+
+
 <div align="center">
+
+<img src="https://lanyard.cnrad.dev/api/1133861858642776094?hideSpotify=true" alt="Discord Presence" width="480" height="230">
+&nbsp;&nbsp;
+<img src="https://spotify-recently-played.jeffreyca.workers.dev/svg?user=m933xiv3vosf8cbfr8twz3gwo&count=3&width=480&radius=9&unique=1" alt="Spotify recently played" width="480" height="230">
+
+</div>
+
+---
+
+<div align="center">
+
   <img src="https://github-readme-activity-graph-yuvriz.vercel.app/graph?username=yuvrizz&theme=react-dark&hide_border=true&area=true" alt="Yuvraj Singh's Contribution Graph" />
+
 </div>
 
 <!-- 
 
 ![Spotify recently played](https://spotify-recently-played.jeffreyca.workers.dev/svg?user=m933xiv3vosf8cbfr8twz3gwo&count=3&width=600&radius=18&unique=1)
 
+
+![Spotify recently played](https://spotify-recently-played.jeffreyca.workers.dev/svg?user=m933xiv3vosf8cbfr8twz3gwo&count=3&width=595&radius=18&unique=1)
+
+
+
+[![Discord Presence](https://lanyard.cnrad.dev/api/1133861858642776094?hideSpotify=true)](https://discord.com/users/1133861858642776094)
+
+![Spotify recently played](https://spotify-recently-played.jeffreyca.workers.dev/svg?user=m933xiv3vosf8cbfr8twz3gwo&count=2&width=595&radius=18&unique=1&album=1&profile=footer-left)
 -->
