@@ -1,0 +1,308 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="1280" height="520"
+     viewBox="0 0 1280 520"
+     role="img" aria-labelledby="title desc">
+
+  <title id="title">Yuvrizz — Personal Terminal</title>
+  <defs>
+    <pattern id="grid" width="32" height="32"
+             patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32"
+            fill="none" stroke="#193026"
+            stroke-width="1" opacity=".55"/>
+    </pattern>
+
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b1510"/>
+      <stop offset=".55" stop-color="#080e0b"/>
+      <stop offset="1" stop-color="#101b13"/>
+    </linearGradient>
+
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#14221a"/>
+      <stop offset="1" stop-color="#0b130e"/>
+    </linearGradient>
+
+    <radialGradient id="halo">
+      <stop offset="0" stop-color="#b9ff66" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#b9ff66" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="glow" x="-80%" y="-80%"
+            width="260%" height="260%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <clipPath id="bounds">
+      <rect x="1" y="1" width="1278" height="518" rx="16"/>
+    </clipPath>
+
+    <style>
+      .mono {
+        font-family: 'JetBrains Mono', 'Cascadia Code',
+                     Consolas, monospace;
+      }
+
+      .sans {
+        font-family: 'Space Grotesk', 'Helvetica Neue',
+                     Arial, sans-serif;
+      }
+
+      .green { fill: #b9ff66; }
+      .white { fill: #e8f0e7; }
+      .muted { fill: #82958a; }
+      .orange { fill: #ffb86b; }
+
+      .orbit {
+        transform-origin: 1000px 255px;
+        animation: orbit 35s linear infinite;
+      }
+
+      .cursor {
+        animation: cursor 1.3s step-end infinite;
+      }
+
+      .packet {
+        stroke-dasharray: 5 24;
+        animation: packet 5s linear infinite;
+      }
+
+      .pulse {
+        animation: pulse 3.5s ease-in-out infinite;
+      }
+
+      .scan {
+        transform-origin: 1000px 255px;
+        animation: scan 12s linear infinite;
+      }
+
+      @keyframes orbit {
+        to { transform: rotate(360deg); }
+      }
+
+      @keyframes cursor {
+        50% { opacity: 0; }
+      }
+
+      @keyframes packet {
+        to { stroke-dashoffset: -145; }
+      }
+
+      @keyframes pulse {
+        50% { opacity: .35; }
+      }
+
+      @keyframes scan {
+        to { transform: rotate(360deg); }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .orbit, .cursor, .packet, .pulse, .scan {
+          animation: none;
+        }
+      }
+    </style>
+  </defs>
+
+  <g clip-path="url(#bounds)">
+
+    <!-- Background -->
+    <rect width="1280" height="520" fill="url(#bg)"/>
+    <rect width="1280" height="520" fill="url(#grid)"/>
+
+    <circle cx="1000" cy="255" r="280" fill="url(#halo)"/>
+
+    <!-- Terminal window -->
+    <rect x="18" y="16" width="1244" height="488"
+          rx="10" fill="none"
+          stroke="#314a37" stroke-width="1"/>
+
+    <!-- Header -->
+    <rect x="18" y="16" width="1244" height="46"
+          rx="10" fill="#142019"/>
+
+    <path d="M18 62H1262" stroke="#304536"/>
+
+    <circle cx="39" cy="39" r="5" fill="#f47566"/>
+    <circle cx="59" cy="39" r="5" fill="#e9c267"/>
+    <circle cx="79" cy="39" r="5" fill="#b9ff66"/>
+
+    <text x="105" y="44" class="mono muted" font-size="14">
+      yuvrizz's - github ~ / profile
+    </text>
+
+    <text x="1238" y="44" text-anchor="end"
+          class="mono muted" font-size="12">
+      My Escape Plan - CTRL + Alt + Delete
+    </text>
+
+    <!-- Left content -->
+    <text x="54" y="112" class="mono green"
+          font-size="15" letter-spacing="1.5">
+      // IDEAS × EXPERIENCES × PERSPECTIVES
+    </text>
+
+    <text x="47" y="233" class="sans green"
+          font-size="112" font-weight="800"
+          letter-spacing="-6">
+      Yuvrizz
+    </text>
+
+    <rect class="cursor" x="606" y="154"
+          width="15" height="83" fill="#b9ff66"
+          filter="url(#glow)"/>
+
+    <text x="54" y="285" class="mono white"
+          font-size="22">
+      Yuvraj Singh
+    </text>
+
+    <text x="54" y="325" class="mono muted"
+          font-size="18">
+      CS Engineer &amp;  Student of Life.
+    </text>
+
+    <path d="M54 362H88" stroke="#ffb86b"
+          stroke-width="2.5"/>
+
+    <text x="102" y="369" class="mono orange"
+          font-size="16">
+      Interested in a little bit of everything.
+    </text>
+
+    <text x="54" y="414" class="mono muted"
+          font-size="13" letter-spacing=".5">
+      DELHI, INDIA  /  DELHI TECHNOLOGICAL UNIVERSITY
+    </text>
+
+    <!-- Radar -->
+    <g fill="none" stroke="#36503b"
+       stroke-width="1">
+
+      <circle cx="1000" cy="255" r="146"/>
+      <circle cx="1000" cy="255" r="102"/>
+      <circle cx="1000" cy="255" r="54"/>
+
+      <path d="M821 255H1179M1000 76V434"
+            stroke-dasharray="3 8"/>
+
+      <path d="M895 150L1105 360
+               M895 360L1105 150"
+            opacity=".55"/>
+    </g>
+
+    <!-- Radar scan sweep -->
+    <g class="scan">
+      <path d="M1000 255L1000 109
+               A146 146 0 0 1 1092 142Z"
+            fill="#b9ff66" opacity=".055"/>
+
+      <path d="M1000 255L1000 109"
+            stroke="#b9ff66"
+            stroke-width="1.5"
+            opacity=".7"
+            filter="url(#glow)"/>
+    </g>
+
+    <!-- Rotating outer orbit -->
+    <g class="orbit" fill="none"
+       stroke="#b9ff66" stroke-width="1.8">
+
+      <circle cx="1000" cy="255" r="160"
+              stroke-dasharray="110 35 25 120 180 70 10 455"
+              opacity=".85"/>
+
+      <circle cx="1000" cy="95" r="4"
+              fill="#b9ff66" stroke="none"
+              filter="url(#glow)"/>
+    </g>
+
+    <!-- Signal connections -->
+    <path class="packet"
+          d="M893 156L1000 255L1107 352
+             M893 352L1000 255L1107 156"
+          fill="none" stroke="#b9ff66"
+          stroke-width="1.8" opacity=".8"/>
+
+    <!-- Center -->
+    <circle cx="1000" cy="255" r="33"
+            fill="#14251a"
+            stroke="#b9ff66" stroke-width="1.3"/>
+
+    <path d="M984 249L978 255L984 261
+             M1016 249L1022 255L1016 261
+             M1005 242L995 268"
+          stroke="#b9ff66" stroke-width="2.5"
+          fill="none" stroke-linecap="round"/>
+
+    <!-- Radar labels -->
+    <g class="mono" font-size="12"
+       text-anchor="middle">
+
+      <g>
+        <rect x="840" y="126" width="111" height="35"
+              rx="4" fill="#111e15"
+              stroke="#47603e"/>
+        <text x="895" y="148" fill="#c7e4b4">
+          ALGORITHMS
+        </text>
+      </g>
+
+      <g>
+        <rect x="1069" y="126" width="111" height="35"
+              rx="4" fill="#111e15"
+              stroke="#47603e"/>
+        <text x="1124" y="148" fill="#c7e4b4">
+          DEVELOPMENT
+        </text>
+      </g>
+
+      <g>
+        <rect x="840" y="349" width="111" height="35"
+              rx="4" fill="#111e15"
+              stroke="#47603e"/>
+        <text x="895" y="371" fill="#c7e4b4">
+          SYSTEMS
+        </text>
+      </g>
+
+      <g>
+        <rect x="1069" y="349" width="111" height="35"
+              rx="4" fill="#111e15"
+              stroke="#47603e"/>
+        <text x="1124" y="371" fill="#c7e4b4">
+          CYBERSECURITY
+        </text>
+      </g>
+
+      <text x="1000" y="435" font-size="12"
+            letter-spacing="1.5" fill="#9caf9c">
+        /home/yuvrizz
+      </text>
+    </g>
+
+    <!-- Footer -->
+    <path d="M18 454H1262" stroke="#304536"/>
+
+    <circle class="pulse" cx="57" cy="486"
+            r="4" fill="#b9ff66"/>
+
+    <text x="74" y="491" class="mono"
+          font-size="14" fill="#c0d0c4">
+      LEARN / BUILD / BREAK / REPEAT
+    </text>
+
+    <!-- <text x="1235" y="491" class="mono muted"
+          font-size="11" text-anchor="end">
+      SYSTEM STATUS: CURIOUS
+    </text> -->
+
+  </g>
+
+  <rect x=".5" y=".5" width="1279" height="519"
+        rx="16" fill="none" stroke="#2b4132"/>
+</svg>
