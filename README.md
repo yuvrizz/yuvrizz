@@ -10,8 +10,6 @@
 I'm passionate about problem-solving, Data Structures and Algorithms, and building things that help me learn through practice. I'm constantly exploring new technologies, improving my coding skills, and working towards becoming a better software engineer.
 -->
 
----
-
 ## Tech Stack
 
 <div align="center">
@@ -46,8 +44,6 @@ I'm passionate about problem-solving, Data Structures and Algorithms, and buildi
 
 </div>
 
----
-
 
 <!-- 
 <div align="center">
@@ -61,11 +57,40 @@ I'm passionate about problem-solving, Data Structures and Algorithms, and buildi
 ---
 -->
 
-<div align="center">
+
+## Recent Writings 
+
+<div align="left">
+
+  <p>
+    <i>"Thoughts, learnings &amp; things worth sharing."</i>
+  </p>
+
+  <a href="https://medium.com/@yuvrizz">
+    <img src="./assets/medium-1.svg"
+         width="100%"
+         alt="Latest Medium article"/>
+  </a>
+
+  <br/>
+
+  <a href="https://medium.com/@yuvrizz">
+    <img src="./assets/medium-2.svg"
+         width="100%"
+         alt="Second latest Medium article"/>
+  </a>
+
+</div>
+
+
+
+
+
+<!-- <div align="center">
 
   <img src="https://github-readme-activity-graph-yuvriz.vercel.app/graph?username=yuvrizz&theme=react-dark&hide_border=true&area=true" alt="Yuvraj Singh's Contribution Graph" />
 
-</div>
+</div> -->
 
 <!-- 
 
