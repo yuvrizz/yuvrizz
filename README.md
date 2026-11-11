@@ -1,7 +1,12 @@
+## About
 
-## About Me
+<p align="center">
+  <img src="./assets/terminal.svg" width="100%"/>
+</p>
 
-Hi, I'm Yuvraj Singh, a Computer Science Engineering student at Delhi Technological University (DTU). I'm passionate about problem-solving, Data Structures and Algorithms, and building things that help me learn through practice. I'm constantly exploring new technologies, improving my coding skills, and working towards becoming a better software engineer.
+<!-- 
+I'm passionate about problem-solving, Data Structures and Algorithms, and building things that help me learn through practice. I'm constantly exploring new technologies, improving my coding skills, and working towards becoming a better software engineer.
+-->
 
 ---
 
