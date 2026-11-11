@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="1000" height="220"
+     viewBox="0 0 1000 220"
+     role="img" aria-labelledby="title">
+
+  <title id="title">How a Room Can Help You Remember a 15-Minute Speech</title>
+
+  <rect width="1000" height="220" rx="10"
+        fill="#101813"/>
+
+  <rect x="1" y="1" width="998" height="218"
+        rx="9" fill="none"
+        stroke="#293a2e"/>
+
+  <rect x="0" y="0" width="5" height="220"
+        rx="2" fill="#b9ff66"/>
+
+  <text x="35" y="38"
+        font-family="monospace"
+        font-size="13"
+        letter-spacing="2"
+        fill="#b9ff66">
+    WRITING / 02
+  </text>
+
+  <text x="965" y="38"
+        text-anchor="end"
+        font-family="monospace"
+        font-size="12"
+        fill="#82958a">
+    MEDIUM · OCT 29, 2026
+  </text>
+
+  <text x="35" y="91"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="26"
+        font-weight="bold"
+        fill="#e8f0e7">
+    How a Room Can Help You Remember a 15-Minute Speech
+  </text>
+
+  <text x="35" y="127"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="14"
+        fill="#82958a">
+    An ancient memory technique to remember what you’d forget otherwise. Imagine standing in front of an audience, about to deliver a 15-minute speech in 
+  </text>
+
+  <path d="M35 158H965"
+        stroke="#293a2e"/>
+
+  <text x="35" y="190"
+        font-family="monospace"
+        font-size="12"
+        letter-spacing="1"
+        fill="#b9ff66">
+    READ ARTICLE →
+  </text>
+
+  <text x="965" y="190"
+        text-anchor="end"
+        font-family="monospace"
+        font-size="12"
+        fill="#82958a">
+    YUVRIZZ / BLOG
+  </text>
+
+  <a href="https://medium.com/@yuvrizz/how-a-room-can-help-you-remember-a-15-minute-speech-d25df4708ac3?source=rss-002623cc9f2e------2">
+    <rect width="1000" height="220"
+          fill="transparent"/>
+  </a>
+</svg>
