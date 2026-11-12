@@ -4,7 +4,7 @@
      viewBox="0 0 1000 220"
      role="img" aria-labelledby="title">
 
-  <title id="title">I Thought My Recursion Base Case Was Enough. I Was Wrong.</title>
+  <title id="title">My O(n) Code Got TLE in C++. The Same Code in Java Got Accepted. Why?</title>
 
   <rect width="1000" height="220" rx="10"
         fill="#101813"/>
@@ -29,7 +29,7 @@
         font-family="monospace"
         font-size="12"
         fill="#82958a">
-    MEDIUM · NOV 10, 2026
+    MEDIUM · NOV 12, 2026
   </text>
 
   <text x="35" y="91"
@@ -37,14 +37,14 @@
         font-size="26"
         font-weight="bold"
         fill="#e8f0e7">
-    I Thought My Recursion Base Case Was Enough. I Was Wrong.
+    My O(n) Code Got TLE in C++. The Same Code in Java Got Accepted. Why?
   </text>
 
   <text x="35" y="127"
         font-family="Arial, Helvetica, sans-serif"
         font-size="14"
         fill="#82958a">
-    I thought I had handled every edge case. C++ had other plans. One small C++ lesson I wish I had learned earlier. While solving a LeetCode problem rece
+    My O(n) Code Got TLE in C++. The Same Code in Java Got Accepted. I was ready to blame C++. Then I learned what actually happens inside the stack, and 
   </text>
 
   <path d="M35 158H965"
@@ -66,7 +66,7 @@
     YUVRIZZ / BLOG
   </text>
 
-  <a href="https://medium.com/@yuvrizz/i-thought-my-recursion-base-case-was-enough-i-was-wrong-0688c0ea8c07?source=rss-002623cc9f2e------2">
+  <a href="https://medium.com/@yuvrizz/my-o-n-code-got-tle-in-c-the-same-code-in-java-got-accepted-why-6a724625c1db?source=rss-002623cc9f2e------2">
     <rect width="1000" height="220"
           fill="transparent"/>
   </a>
