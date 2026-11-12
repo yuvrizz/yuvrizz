@@ -1,4 +1,3 @@
-
 const fs = require("fs");
 const path = require("path");
 const { XMLParser } = require("fast-xml-parser");
@@ -15,7 +14,8 @@ const COLORS = {
   panel: "#142019"
 };
 
-// Safely extract text from XML values.
+// Safely extract text from any shape fast-xml-parser may return
+// (string, number, array, { __cdata }, { "#text" }, nested objects).
 function getText(value) {
   if (value == null) return "";
 
@@ -23,14 +23,19 @@ function getText(value) {
     return String(value);
   }
 
-  if (typeof value === "object") {
-    if (value.__cdata !== undefined) {
-      return getText(value.__cdata);
-    }
+  if (Array.isArray(value)) {
+    return value.map(getText).join("");
+  }
 
-    if (value["#text"] !== undefined) {
-      return getText(value["#text"]);
-    }
+  if (typeof value === "object") {
+    if (value.__cdata !== undefined) return getText(value.__cdata);
+    if (value["#text"] !== undefined) return getText(value["#text"]);
+
+    // Fallback: concatenate any non-attribute children
+    return Object.entries(value)
+      .filter(([key]) => !key.startsWith("@_"))
+      .map(([, v]) => getText(v))
+      .join("");
   }
 
   return "";
@@ -65,16 +70,17 @@ function stripHtml(html = "") {
 }
 
 // Extract the first meaningful paragraph or heading.
+// Prefers the full post body, falls back to the short description.
 function extractSubtitle(article) {
-  const html = getText(
-    article.description || article["content:encoded"] || ""
-  );
+  const html =
+    getText(article["content:encoded"]) ||
+    getText(article.description) ||
+    "";
 
-  const title = stripHtml(getText(article.title || ""));
+  const title = stripHtml(getText(article.title));
 
-  const blocks = html.match(
-    /<(?:h[2-6]|p)\b[^>]*>[\s\S]*?<\/(?:h[2-6]|p)>/gi
-  ) || [];
+  const blocks =
+    html.match(/<(?:h[2-6]|p)\b[^>]*>[\s\S]*?<\/(?:h[2-6]|p)>/gi) || [];
 
   for (const block of blocks) {
     const text = stripHtml(block);
@@ -102,35 +108,30 @@ function truncateText(text, maxLength) {
 
 // Generate one Medium article card.
 function createCard(article, index) {
-  const rawTitle = stripHtml(
-    getText(article.title || "Untitled")
-  );
-
+  const rawTitle = stripHtml(getText(article.title)) || "Untitled";
   const rawSubtitle = extractSubtitle(article);
 
-  const title = escapeXml(
-    truncateText(rawTitle, 95)
-  );
-
-  const description = escapeXml(
-    truncateText(rawSubtitle, 145)
-  );
+  const title = escapeXml(truncateText(rawTitle, 95));
+  const description = escapeXml(truncateText(rawSubtitle, 145));
 
   const link = escapeXml(
-    getText(article.link) || "https://medium.com/@yuvrizz"
+    getText(article.link).trim() || "https://medium.com/@yuvrizz"
   );
 
-  const date = getText(article.pubDate)
-    ? new Date(getText(article.pubDate)).toLocaleDateString(
-        "en-US",
-        {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-          timeZone: "UTC"
-        }
-      ).toUpperCase()
-    : "RECENTLY PUBLISHED";
+  const pubDate = getText(article.pubDate).trim();
+  const parsedDate = pubDate ? new Date(pubDate) : null;
+
+  const date =
+    parsedDate && !isNaN(parsedDate)
+      ? parsedDate
+          .toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+            timeZone: "UTC"
+          })
+          .toUpperCase()
+      : "RECENTLY PUBLISHED";
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
@@ -212,12 +213,12 @@ function createCard(article, index) {
 async function main() {
   console.log("Fetching Medium RSS feed...");
 
-  const response = await fetch(FEED_URL);
+  const response = await fetch(FEED_URL, {
+    headers: { "User-Agent": "Mozilla/5.0 (medium-card-generator)" }
+  });
 
   if (!response.ok) {
-    throw new Error(
-      `Medium RSS request failed: ${response.status}`
-    );
+    throw new Error(`Medium RSS request failed: ${response.status}`);
   }
 
   const xml = await response.text();
@@ -226,7 +227,9 @@ async function main() {
     ignoreAttributes: false,
     trimValues: true,
     parseTagValue: false,
-    parseAttributeValue: false
+    parseAttributeValue: false,
+    cdataPropName: "__cdata",
+    textNodeName: "#text"
   });
 
   const parsed = parser.parse(xml);
@@ -243,23 +246,15 @@ async function main() {
     throw new Error("No Medium articles found in RSS feed.");
   }
 
-  fs.mkdirSync(OUTPUT_DIR, {
-    recursive: true
-  });
+  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
   articles.forEach((article, index) => {
     const filename = `medium-${index + 1}.svg`;
     const filepath = path.join(OUTPUT_DIR, filename);
 
-    fs.writeFileSync(
-      filepath,
-      createCard(article, index),
-      "utf8"
-    );
+    fs.writeFileSync(filepath, createCard(article, index), "utf8");
 
-    console.log(
-      `Generated ${filename}: ${getText(article.title)}`
-    );
+    console.log(`Generated ${filename}: ${getText(article.title)}`);
   });
 
   console.log("Medium cards updated successfully!");
