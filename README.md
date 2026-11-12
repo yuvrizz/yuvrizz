@@ -10,6 +10,22 @@
 I'm passionate about problem-solving, Data Structures and Algorithms, and building things that help me learn through practice. I'm constantly exploring new technologies, improving my coding skills, and working towards becoming a better software engineer.
 -->
 
+
+<p align="center">
+  <samp>
+    ~/connect : &nbsp;
+    <a href="mailto:uvyuvrajsingh25@gmail.com">↗ Email</a>
+    &nbsp; · &nbsp;
+    <a href="https://www.instagram.com/yuvrizz.exe/">↗ Instagram</a>
+    &nbsp; · &nbsp;
+    <a href="https://www.linkedin.com/in/yuvrajsingh-dtu/">↗ LinkedIn</a>
+    &nbsp; · &nbsp;
+    <a href="https://leetcode.com/u/yuvrizz/">↗ LeetCode</a>
+  </samp>
+</p>
+
+
+
 ## Tech Stack
 
 <div align="center">
