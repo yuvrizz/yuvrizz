@@ -1,4 +1,3 @@
-
 const fs = require("fs");
 const path = require("path");
 const { XMLParser } = require("fast-xml-parser");
@@ -25,27 +24,75 @@ function escapeXml(value = "") {
   })[char]);
 }
 
-function cleanDescription(html = "") {
-  return html
-    .replace(/<script[\s\S]*?<\/script>/gi, "")
-    .replace(/<style[\s\S]*?<\/style>/gi, "")
+// Decode common HTML entities and remove HTML tags.
+function stripHtml(html = "") {
+  return String(html)
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, "")
     .replace(/<[^>]*>/g, " ")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&#39;/g, "'")
-    .replace(/&quot;/g, '"')
+    .replace(/&nbsp;|&#160;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;|&apos;/gi, "'")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
     .replace(/\s+/g, " ")
     .trim();
 }
 
-function createCard(article, index) {
-  const title = escapeXml(article.title || "Untitled");
-  const description = escapeXml(
-    cleanDescription(article["content:encoded"] || article.description || "")
-      .slice(0, 150)
+// Extract the first meaningful text block as the subtitle.
+function extractSubtitle(article) {
+  const html = String(
+    article.description || article["content:encoded"] || ""
   );
 
-  const link = escapeXml(article.link || "https://medium.com/@yuvrizz");
+  const title = stripHtml(article.title || "");
+
+  // Extract paragraph or heading blocks.
+  const blocks = html.match(
+    /<(?:h[2-6]|p)\b[^>]*>[\s\S]*?<\/(?:h[2-6]|p)>/gi
+  ) || [];
+
+  for (const block of blocks) {
+    const text = stripHtml(block);
+
+    if (
+      text &&
+      text !== title &&
+      !text.startsWith("Image source:")
+    ) {
+      return text;
+    }
+  }
+
+  // Fallback if the RSS content has no paragraph tags.
+  const fallback = stripHtml(html);
+
+  return fallback === title ? "" : fallback;
+}
+
+// Prevent long titles and subtitles from overflowing.
+function truncateText(text, maxLength) {
+  const value = String(text || "").trim();
+
+  if (value.length <= maxLength) {
+    return value;
+  }
+
+  return value.slice(0, maxLength - 1).trimEnd() + "…";
+}
+
+function createCard(article, index) {
+  const rawTitle = stripHtml(article.title || "Untitled");
+  const rawSubtitle = extractSubtitle(article);
+
+  const title = escapeXml(truncateText(rawTitle, 95));
+  const description = escapeXml(truncateText(rawSubtitle, 145));
+
+  const link = escapeXml(
+    article.link || "https://medium.com/@yuvrizz"
+  );
 
   const date = article.pubDate
     ? new Date(article.pubDate).toLocaleDateString("en-US", {
@@ -135,17 +182,21 @@ async function main() {
   const response = await fetch(FEED_URL);
 
   if (!response.ok) {
-    throw new Error(`Medium RSS request failed: ${response.status}`);
+    throw new Error(
+      `Medium RSS request failed: ${response.status}`
+    );
   }
 
   const xml = await response.text();
 
   const parser = new XMLParser({
     ignoreAttributes: false,
-    trimValues: true
+    trimValues: true,
+    cdataPropName: "__cdata"
   });
 
   const parsed = parser.parse(xml);
+
   let articles = parsed.rss?.channel?.item || [];
 
   if (!Array.isArray(articles)) {
@@ -164,9 +215,15 @@ async function main() {
     const filename = `medium-${index + 1}.svg`;
     const filepath = path.join(OUTPUT_DIR, filename);
 
-    fs.writeFileSync(filepath, createCard(article, index));
+    fs.writeFileSync(
+      filepath,
+      createCard(article, index),
+      "utf8"
+    );
 
-    console.log(`Generated ${filename}: ${article.title}`);
+    console.log(
+      `Generated ${filename}: ${article.title}`
+    );
   });
 }
 
