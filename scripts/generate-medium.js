@@ -1,3 +1,4 @@
+
 const fs = require("fs");
 const path = require("path");
 const { XMLParser } = require("fast-xml-parser");
@@ -14,6 +15,28 @@ const COLORS = {
   panel: "#142019"
 };
 
+// Safely extract text from XML values.
+function getText(value) {
+  if (value == null) return "";
+
+  if (typeof value === "string" || typeof value === "number") {
+    return String(value);
+  }
+
+  if (typeof value === "object") {
+    if (value.__cdata !== undefined) {
+      return getText(value.__cdata);
+    }
+
+    if (value["#text"] !== undefined) {
+      return getText(value["#text"]);
+    }
+  }
+
+  return "";
+}
+
+// Escape special XML characters.
 function escapeXml(value = "") {
   return String(value).replace(/[<>&"']/g, char => ({
     "<": "&lt;",
@@ -24,7 +47,7 @@ function escapeXml(value = "") {
   })[char]);
 }
 
-// Decode common HTML entities and remove HTML tags.
+// Remove HTML tags and decode common entities.
 function stripHtml(html = "") {
   return String(html)
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
@@ -41,15 +64,14 @@ function stripHtml(html = "") {
     .trim();
 }
 
-// Extract the first meaningful text block as the subtitle.
+// Extract the first meaningful paragraph or heading.
 function extractSubtitle(article) {
-  const html = String(
+  const html = getText(
     article.description || article["content:encoded"] || ""
   );
 
-  const title = stripHtml(article.title || "");
+  const title = stripHtml(getText(article.title || ""));
 
-  // Extract paragraph or heading blocks.
   const blocks = html.match(
     /<(?:h[2-6]|p)\b[^>]*>[\s\S]*?<\/(?:h[2-6]|p)>/gi
   ) || [];
@@ -57,22 +79,17 @@ function extractSubtitle(article) {
   for (const block of blocks) {
     const text = stripHtml(block);
 
-    if (
-      text &&
-      text !== title &&
-      !text.startsWith("Image source:")
-    ) {
+    if (text && text !== title) {
       return text;
     }
   }
 
-  // Fallback if the RSS content has no paragraph tags.
   const fallback = stripHtml(html);
 
   return fallback === title ? "" : fallback;
 }
 
-// Prevent long titles and subtitles from overflowing.
+// Prevent long text from overflowing.
 function truncateText(text, maxLength) {
   const value = String(text || "").trim();
 
@@ -83,24 +100,36 @@ function truncateText(text, maxLength) {
   return value.slice(0, maxLength - 1).trimEnd() + "…";
 }
 
+// Generate one Medium article card.
 function createCard(article, index) {
-  const rawTitle = stripHtml(article.title || "Untitled");
-  const rawSubtitle = extractSubtitle(article);
-
-  const title = escapeXml(truncateText(rawTitle, 95));
-  const description = escapeXml(truncateText(rawSubtitle, 145));
-
-  const link = escapeXml(
-    article.link || "https://medium.com/@yuvrizz"
+  const rawTitle = stripHtml(
+    getText(article.title || "Untitled")
   );
 
-  const date = article.pubDate
-    ? new Date(article.pubDate).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-        timeZone: "UTC"
-      }).toUpperCase()
+  const rawSubtitle = extractSubtitle(article);
+
+  const title = escapeXml(
+    truncateText(rawTitle, 95)
+  );
+
+  const description = escapeXml(
+    truncateText(rawSubtitle, 145)
+  );
+
+  const link = escapeXml(
+    getText(article.link) || "https://medium.com/@yuvrizz"
+  );
+
+  const date = getText(article.pubDate)
+    ? new Date(getText(article.pubDate)).toLocaleDateString(
+        "en-US",
+        {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+          timeZone: "UTC"
+        }
+      ).toUpperCase()
     : "RECENTLY PUBLISHED";
 
   return `<?xml version="1.0" encoding="UTF-8"?>
@@ -175,10 +204,14 @@ function createCard(article, index) {
     <rect width="1000" height="220"
           fill="transparent"/>
   </a>
+
 </svg>`;
 }
 
+// Fetch RSS and generate the latest two cards.
 async function main() {
+  console.log("Fetching Medium RSS feed...");
+
   const response = await fetch(FEED_URL);
 
   if (!response.ok) {
@@ -192,7 +225,8 @@ async function main() {
   const parser = new XMLParser({
     ignoreAttributes: false,
     trimValues: true,
-    cdataPropName: "__cdata"
+    parseTagValue: false,
+    parseAttributeValue: false
   });
 
   const parsed = parser.parse(xml);
@@ -209,7 +243,9 @@ async function main() {
     throw new Error("No Medium articles found in RSS feed.");
   }
 
-  fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+  fs.mkdirSync(OUTPUT_DIR, {
+    recursive: true
+  });
 
   articles.forEach((article, index) => {
     const filename = `medium-${index + 1}.svg`;
@@ -222,12 +258,14 @@ async function main() {
     );
 
     console.log(
-      `Generated ${filename}: ${article.title}`
+      `Generated ${filename}: ${getText(article.title)}`
     );
   });
+
+  console.log("Medium cards updated successfully!");
 }
 
 main().catch(error => {
-  console.error(error);
+  console.error("Generation failed:", error);
   process.exit(1);
 });
